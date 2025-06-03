@@ -1,11 +1,4 @@
 import { NextResponse } from 'next/server'
-import { createPublicClient, http, parseEther } from 'viem'
-import { celo } from 'wagmi/chains'
-
-const publicClient = createPublicClient({
-  chain: celo,
-  transport: http()
-})
 
 export async function POST(request: Request) {
   try {

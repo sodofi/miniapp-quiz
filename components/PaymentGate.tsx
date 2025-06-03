@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useAccount, useConnect, useSendTransaction, useTransaction } from 'wagmi'
 import { parseEther } from 'viem'
 import { Button } from '@/components/ui/button'
@@ -27,6 +27,11 @@ export function PaymentGate({ onPaymentSuccess, children }: PaymentGateProps) {
     hash,
   })
 
+  const handleSuccessDismiss = useCallback(() => {
+    setShowSuccess(false)
+    onPaymentSuccess()
+  }, [onPaymentSuccess])
+
   useEffect(() => {
     let timeout: NodeJS.Timeout
     if (isTransactionSuccess) {
@@ -36,12 +41,7 @@ export function PaymentGate({ onPaymentSuccess, children }: PaymentGateProps) {
       }, 3000)
     }
     return () => clearTimeout(timeout)
-  }, [isTransactionSuccess])
-
-  const handleSuccessDismiss = () => {
-    setShowSuccess(false)
-    onPaymentSuccess()
-  }
+  }, [isTransactionSuccess, handleSuccessDismiss])
 
   const handlePayment = async () => {
     if (!isConnected || !address) {
