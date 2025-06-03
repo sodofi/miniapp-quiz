@@ -1,13 +1,22 @@
 {
-  "name": "Are You Smarter Quiz",
-  "description": "Test your knowledge with a 5th-grade level quiz! Pay 0.1 CELO to unlock and challenge yourself.",
-  "icons": {
-    "192x192": "/quiz-1.png"
-  },
-  "theme": {
-    "accent": "#EAB308"
-  },
-  "capabilities": {
-    "wallet": true
+  "frame": {
+    "version": "1",
+    "name": "Are You Smarter Quiz",
+    "description": "Test your knowledge with a 5th-grade level quiz! Pay 0.1 CELO to unlock and challenge yourself.",
+    "iconUrl": "/quiz-1.png",
+    "imageUrl": "/quiz-2.png",
+    "homeUrl": "https://your-domain.com",
+    "buttonTitle": "Start Quiz",
+    "splashImageUrl": "/quiz-1.png",
+    "splashBackgroundColor": "#EAB308",
+    "theme": {
+      "accent": "#EAB308"
+    },
+    "requiredChains": [
+      "eip155:42220"
+    ],
+    "requiredCapabilities": [
+      "wallet.getEthereumProvider"
+    ]
   }
 } 
