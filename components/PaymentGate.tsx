@@ -1,10 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAccount, useConnect, useSendTransaction, useTransaction } from 'wagmi'
 import { parseEther } from 'viem'
 import { Button } from '@/components/ui/button'
 import { sdk } from '@farcaster/frame-sdk'
+import { X } from 'lucide-react'
 
 const PAYMENT_AMOUNT = '0.1'
 const RECIPIENT_ADDRESS = '0x4858aBb6dfF69904f1c155D40A48CD8846AEA2f6' // Replace with your actual address
@@ -16,6 +17,7 @@ interface PaymentGateProps {
 
 export function PaymentGate({ onPaymentSuccess, children }: PaymentGateProps) {
   const [isPaying, setIsPaying] = useState(false)
+  const [showSuccess, setShowSuccess] = useState(false)
   const { isConnected, address } = useAccount()
   const { connect, connectors } = useConnect()
   
@@ -24,6 +26,22 @@ export function PaymentGate({ onPaymentSuccess, children }: PaymentGateProps) {
   const { isSuccess: isTransactionSuccess } = useTransaction({
     hash,
   })
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout
+    if (isTransactionSuccess) {
+      setShowSuccess(true)
+      timeout = setTimeout(() => {
+        handleSuccessDismiss()
+      }, 3000)
+    }
+    return () => clearTimeout(timeout)
+  }, [isTransactionSuccess])
+
+  const handleSuccessDismiss = () => {
+    setShowSuccess(false)
+    onPaymentSuccess()
+  }
 
   const handlePayment = async () => {
     if (!isConnected || !address) {
@@ -46,8 +64,40 @@ export function PaymentGate({ onPaymentSuccess, children }: PaymentGateProps) {
   // Initialize Farcaster SDK
   sdk.actions.ready()
 
+  if (showSuccess) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className="bg-white text-black p-8 rounded-lg max-w-md w-full mx-4 relative transform rotate-2">
+          <button
+            onClick={handleSuccessDismiss}
+            className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors"
+          >
+            <X className="w-6 h-6" />
+          </button>
+          <div className="text-center">
+            <h2 className="text-4xl font-black mb-4">SUCCESS! 🎉</h2>
+            <p className="text-xl font-bold mb-4">Transaction confirmed!</p>
+            <a
+              href={`https://explorer.celo.org/tx/${hash}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-yellow-600 hover:text-yellow-700 underline font-bold block mb-4"
+            >
+              View on Explorer
+            </a>
+            <Button
+              onClick={handleSuccessDismiss}
+              className="bg-yellow-400 hover:bg-yellow-500 text-black font-black px-8 py-3 transform hover:scale-105 transition-transform"
+            >
+              START QUIZ
+            </Button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   if (isTransactionSuccess) {
-    onPaymentSuccess()
     return <>{children}</>
   }
 
@@ -78,7 +128,7 @@ export function PaymentGate({ onPaymentSuccess, children }: PaymentGateProps) {
           </Button>
         </div>
 
-        {hash && (
+        {hash && !isTransactionSuccess && (
           <div className="mt-8 text-xl font-bold">
             Transaction pending...
             <br />
