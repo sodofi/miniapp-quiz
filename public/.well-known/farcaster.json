@@ -1,0 +1,13 @@
+{
+  "name": "Are You Smarter Quiz",
+  "description": "Test your knowledge with a 5th-grade level quiz! Pay 0.1 CELO to unlock and challenge yourself.",
+  "icons": {
+    "192x192": "/quiz-1.png"
+  },
+  "theme": {
+    "accent": "#EAB308"
+  },
+  "capabilities": {
+    "wallet": true
+  }
+} 
