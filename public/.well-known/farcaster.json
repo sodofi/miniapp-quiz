@@ -4,24 +4,26 @@
         "payload": "eyJkb21haW4iOiJtaW5pYXBwLXF1aXoudmVyY2VsLmFwcCJ9",
         "signature": "MHhkZmYwMzM2ZGM3YjJhZDgxZmU3NzIzMGFjNTE0NWE0Y2U3NTM4ZGEwOWE2ZWNmZWIxNzVmZTE4NDZjYjYzYzY2NWRjNWE2NDA1NTIzY2IxNTExYTM0NGVkMzkxZjcwNDNiN2M4NTA1NjU1MjEyODllNGFiYzcwZmJjZDA0ZmRkYTFj"
     },
+    "name": "Are You Smarter Quiz",
+    "description": "Test your knowledge with a 5th-grade level quiz! Pay 0.1 CELO to unlock and challenge yourself.",
+    "domain": "miniapp-quiz.vercel.app",
+    "theme": {
+        "accent": "#EAB308"
+    },
+    "requiredChains": [
+        "eip155:42220"
+    ],
+    "requiredCapabilities": [
+        "wallet.getEthereumProvider"
+    ],
     "frame": {
         "version": "1",
         "name": "Are You Smarter Quiz",
-        "description": "Test your knowledge with a 5th-grade level quiz! Pay 0.1 CELO to unlock and challenge yourself.",
         "iconUrl": "https://miniapp-quiz.vercel.app/quiz-1.png",
         "imageUrl": "https://miniapp-quiz.vercel.app/quiz-2.png",
         "homeUrl": "https://miniapp-quiz.vercel.app",
         "buttonTitle": "Start Quiz",
         "splashImageUrl": "https://miniapp-quiz.vercel.app/quiz-1.png",
-        "splashBackgroundColor": "#EAB308",
-        "theme": {
-        "accent": "#EAB308"
-        },
-        "requiredChains": [
-        "eip155:42220"
-        ],
-        "requiredCapabilities": [
-        "wallet.getEthereumProvider"
-        ]
+        "splashBackgroundColor": "#EAB308"
     }
 } 
